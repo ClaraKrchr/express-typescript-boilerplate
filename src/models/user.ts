@@ -14,6 +14,6 @@ const UserSchema: Schema = new Schema({
 
 const User: Model<User> = model("User", UserSchema);
 
-// type UserGet = Omit<User, "password">
-// type UserPost = Omit<User, "id">
-// type UserUpdate = Partial<UserPost>
+type UserGet = Omit<User, "password">
+type UserPost = Omit<User, "id">
+type UserUpdate = Partial<UserPost>

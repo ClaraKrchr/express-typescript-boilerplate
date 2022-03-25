@@ -21,6 +21,6 @@ const SensorSchema: Schema = new Schema ({
 
 const Sensor: Model<Sensor> = model("Sensor", SensorSchema);
 
-// type SensorGet = Sensor & {value: string}
-// type SensorPost = Omit<Sensor, "id">
-// type SensorUpdate = Partial<SensorPost>
+type SensorGet = Sensor & {value: string}
+type SensorPost = Omit<Sensor, "id">
+type SensorUpdate = Partial<SensorPost>
