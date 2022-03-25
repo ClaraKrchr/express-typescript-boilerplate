@@ -1,6 +1,6 @@
 import { model, Schema, Model, Document } from "mongoose";
 
-enum SensorType{
+enum SensorType {
     TEMPERATURE,
     HUMIDITY,
     BARO,
@@ -14,7 +14,7 @@ interface Sensor extends Document {
 }
 
 const SensorSchema: Schema = new Schema ({
-    type: { type: SensorType, required: true },
+    type: { type: Number, required: true, enum: [0, 1, 2, 3] },
     designation : { type: String, required: true },
     rawValue: { type: Number, required: true },
 });
