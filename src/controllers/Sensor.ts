@@ -41,14 +41,13 @@ export default {
 //     }
 //   },
 
-//   delete: async (req: Request, res: Response, next: NextFunction) => {
-//     try {
-//         //await Sensor.deleteOne(req.params.id);
-//       // const id: number = req.params.id;
-//       res.json({ message: "Sensor deleted." });
-//       return;
-//     } catch (error) {
-//       next(error);
-//     }
-//   },
+delete: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await Sensor.deleteOne({ _id: req.params.id });
+      res.json({ message: "Sensor deleted." });
+      return;
+    } catch (error) {
+      next(error);
+    }
+  },
 };

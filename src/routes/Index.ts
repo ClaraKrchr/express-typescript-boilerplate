@@ -21,8 +21,8 @@ router.post("/user", User.post);
 // // Patch user
 // router.patch("/user/:id", User.patch);
 
-// // Delete user
-// router.delete("/user/:id", User.delete);
+// Delete user
+router.delete("/user/:id", User.delete);
 
 // ---- ACTUATORS ---- //
 // // Get all actuators
@@ -37,8 +37,8 @@ router.post("/actuator", Actuator.post);
 // // Patch actuator
 // router.patch("/actuator/:id", Actuator.patch);
 
-// // Delete actuator
-// router.delete("/actuator/:id", Actuator.delete);
+// Delete actuator
+router.delete("/actuator/:id", Actuator.delete);
 
 // ---- SENSORS ---- //
 // // Get all sensors
@@ -53,7 +53,7 @@ router.post("/sensor", Sensor.post);
 // // Patch sensor
 // router.patch("/sensor/:id", Sensor.patch);
 
-// // Delete sensor
-// router.delete("/sensor/:id", Sensor.delete);
+// Delete sensor
+router.delete("/sensor/:id", Sensor.delete);
 
 export default router;

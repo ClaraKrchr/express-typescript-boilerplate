@@ -41,13 +41,13 @@ export default {
 //     }
 //   },
 
-//   delete: async (req: Request, res: Response, next: NextFunction) => {
-//     try {
-//       // const id: number = req.params.id;
-//       res.json({ message: "Actuator deleted." });
-//       return;
-//     } catch (error) {
-//       next(error);
-//     }
-//   },
+delete: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await Actuator.deleteOne({ _id: req.params.id });
+      res.json({ message: "Actuator deleted." });
+      return;
+    } catch (error) {
+      next(error);
+    }
+  },
 };
