@@ -14,7 +14,7 @@ export default {
   getById: async (req: Request, res: Response, next: NextFunction) => {
     try {
       let user = await User.findById({ _id: req.params.id });
-      res.send({ id: user?._id, email: user?.email });
+      res.send({ id: user?._id, email: user?.email, username: user?.username });
     } catch (error) {
       next(error);
     }
@@ -35,7 +35,12 @@ export default {
         _id: req.params.id,
         update: req.body,
       });
-      res.send({ message: "User updated.", id: user?._id, email: user?.email });
+      res.send({
+        message: "User updated.",
+        id: user?._id,
+        email: user?.email,
+        username: user?.username,
+      });
     } catch (error) {
       next(error);
     }
