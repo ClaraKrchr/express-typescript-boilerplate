@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
       "strict": true,
+      "allowSyntheticDefaultImports": true,
       "module": "commonjs",
       "noImplicitAny": true,
       "preserveConstEnums": true,
