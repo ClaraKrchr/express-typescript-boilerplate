@@ -1,4 +1,7 @@
 import Index from "@/controllers/Index";
+import User from "@/controllers/User";
+import Actuator from "@/controllers/Actuator";
+import Sensor from "@/controllers/Sensor";
 import express from "express";
 const router = express.Router();
 
@@ -7,53 +10,50 @@ router.get("/", Index.get);
 
 // ---- USERS ---- //
 // Get all users
-router.get("/user", Index.getAllUsers);
+router.get("/user", User.getAll);
 
 // Get user
-router.get("/user/:id", Index.getUserById);
+router.get("/user/:id", User.getById);
 
 // Post user
-router.post("/user", Index.postUser);
+router.post("/user", User.post);
 
 // Patch user
-router.patch("/user/:id", Index.patchUser);
+router.patch("/user/:id", User.patch);
 
 // Delete user
-router.delete("/user/:id", Index.deleteUser);
-
+router.delete("/user/:id", User.delete);
 
 // ---- ACTUATORS ---- //
 // Get all actuators
-router.get("/actuator", Index.getAllActuators);
+router.get("/actuator", Actuator.getAll);
 
 // Get actuator
-router.get("/actuator/:id", Index.getActuatorById);
+router.get("/actuator/:id", Actuator.getById);
 
 // Post actuator
-router.post("/actuator", Index.postActuator);
+router.post("/actuator", Actuator.post);
 
 // Patch actuator
-router.patch("/actuator/:id", Index.patchActuator);
+router.patch("/actuator/:id", Actuator.patch);
 
 // Delete actuator
-router.delete("/actuator/:id", Index.deleteActuator);
-
+router.delete("/actuator/:id", Actuator.delete);
 
 // ---- SENSORS ---- //
 // Get all sensors
-router.get("/sensor", Index.getAllSensors);
+router.get("/sensor", Sensor.getAll);
 
 // Get sensor
-router.get("/sensor/:id", Index.getSensorById);
+router.get("/sensor/:id", Sensor.getById);
 
 // Post sensor
-router.post("/sensor", Index.postSensor);
+router.post("/sensor", Sensor.post);
 
 // Patch sensor
-router.patch("/sensor/:id", Index.patchSensor);
+router.patch("/sensor/:id", Sensor.patch);
 
 // Delete sensor
-router.delete("/sensor/:id", Index.deleteSensor);
-
+router.delete("/sensor/:id", Sensor.delete);
 
 export default router;
