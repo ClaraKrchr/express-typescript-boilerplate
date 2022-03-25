@@ -2,16 +2,14 @@ import { NextFunction, Request, Response } from "express";
 import { User } from "./../models/user";
 
 export default {
-  //   getAll: async (req: Request, res: Response, next: NextFunction) => {
-  //     try {
-  //       const users: User[] = [];
-
-  //       res.json({ users });
-  //       return;
-  //     } catch (error) {
-  //       next(error);
-  //     }
-  //   },
+    getAll: async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const users: typeof User[] = await User.find({});
+        res.send({users: users});
+      } catch (error) {
+        next(error);
+      }
+    },
 
   getById: async (req: Request, res: Response, next: NextFunction) => {
     try {

@@ -2,16 +2,14 @@ import { NextFunction, Request, Response } from "express";
 import { Actuator } from "./../models/actuator";
 
 export default {
-//   getAll: async (req: Request, res: Response, next: NextFunction) => {
-//     try {
-//       const actuators: Actuator[] = [];
-
-//       res.json({ actuators });
-//       return;
-//     } catch (error) {
-//       next(error);
-//     }
-//   },
+  getAll: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const actuators: typeof Actuator[] = await Actuator.find({});
+      res.send({actuators: actuators});
+    } catch (error) {
+      next(error);
+    }
+  },
 
 getById: async (req: Request, res: Response, next: NextFunction) => {
   try {

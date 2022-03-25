@@ -2,16 +2,14 @@ import { NextFunction, Request, Response } from "express";
 import { Sensor } from "./../models/sensor";
 
 export default {
-  //   getAll: async (req: Request, res: Response, next: NextFunction) => {
-  //     try {
-  //       const sensors: Sensor[] = [];
-
-  //       res.json({ sensors });
-  //       return;
-  //     } catch (error) {
-  //       next(error);
-  //     }
-  //   },
+  getAll: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const sensors: typeof Sensor[] = await Sensor.find({});
+      res.send({sensors: sensors});
+    } catch (error) {
+      next(error);
+    }
+  },
 
   getById: async (req: Request, res: Response, next: NextFunction) => {
     try {

@@ -9,8 +9,8 @@ const router = express.Router();
 router.get("/", Index.get);
 
 // ---- USERS ---- //
-// // Get all users
-// router.get("/user", User.getAll);
+// Get all users
+router.get("/user", User.getAll);
 
 // Get user
 router.get("/user/:id", User.getById);
@@ -25,8 +25,8 @@ router.post("/user", User.post);
 router.delete("/user/:id", User.delete);
 
 // ---- ACTUATORS ---- //
-// // Get all actuators
-// router.get("/actuator", Actuator.getAll);
+// Get all actuators
+router.get("/actuator", Actuator.getAll);
 
 // Get actuator
 router.get("/actuator/:id", Actuator.getById);
@@ -41,8 +41,8 @@ router.post("/actuator", Actuator.post);
 router.delete("/actuator/:id", Actuator.delete);
 
 // ---- SENSORS ---- //
-// // Get all sensors
-// router.get("/sensor", Sensor.getAll);
+// Get all sensors
+router.get("/sensor", Sensor.getAll);
 
 // Get sensor
 router.get("/sensor/:id", Sensor.getById);
