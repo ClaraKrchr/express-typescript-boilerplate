@@ -12,8 +12,8 @@ router.get("/", Index.get);
 // // Get all users
 // router.get("/user", User.getAll);
 
-// // Get user
-// router.get("/user/:id", User.getById);
+// Get user
+router.get("/user/:id", User.getById);
 
 // Post user
 router.post("/user", User.post);
@@ -28,8 +28,8 @@ router.delete("/user/:id", User.delete);
 // // Get all actuators
 // router.get("/actuator", Actuator.getAll);
 
-// // Get actuator
-// router.get("/actuator/:id", Actuator.getById);
+// Get actuator
+router.get("/actuator/:id", Actuator.getById);
 
 // Post actuator
 router.post("/actuator", Actuator.post);
@@ -44,8 +44,8 @@ router.delete("/actuator/:id", Actuator.delete);
 // // Get all sensors
 // router.get("/sensor", Sensor.getAll);
 
-// // Get sensor
-// router.get("/sensor/:id", Sensor.getById);
+// Get sensor
+router.get("/sensor/:id", Sensor.getById);
 
 // Post sensor
 router.post("/sensor", Sensor.post);

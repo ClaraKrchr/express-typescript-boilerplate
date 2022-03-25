@@ -13,15 +13,19 @@ export default {
 //     }
 //   },
 
-//   getById: async (req: Request, res: Response, next: NextFunction) => {
-//     try {
-//       const actuator: Actuator;
-//       res.json({ actuator });
-//       return;
-//     } catch (error) {
-//       next(error);
-//     }
-//   },
+getById: async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    let actuator = await Actuator.findById({ _id: req.params.id });
+    res.send({
+      id: actuator?._id,
+      type: actuator?.type,
+      designation: actuator?.designation,
+      state: actuator?.state,
+    });
+  } catch (error) {
+    next(error);
+  }
+},
 
   post: async (req: Request, res: Response, next: NextFunction) => {
     try {

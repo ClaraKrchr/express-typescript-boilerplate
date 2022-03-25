@@ -13,16 +13,14 @@ export default {
   //     }
   //   },
 
-  //   getById: async (req: Request, res: Response, next: NextFunction) => {
-  //     try {
-  //       //    const user: User;
-  //       //   res.json({ user });
-
-  //       return;
-  //     } catch (error) {
-  //       next(error);
-  //     }
-  //   },
+  getById: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      let user = await User.findById({ _id: req.params.id });
+      res.send({ id: user?._id, email: user?.email });
+    } catch (error) {
+      next(error);
+    }
+  },
 
   post: async (req: Request, res: Response, next: NextFunction) => {
     try {
