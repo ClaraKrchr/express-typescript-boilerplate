@@ -17,7 +17,7 @@ const ActuatorSchema: Schema = new Schema({
     state: { type: Boolean, required: true},
 });
 
-const Actuator: Model<Actuator> = model("Actuator", ActuatorSchema);
+export const Actuator: Model<Actuator> = model("Actuator", ActuatorSchema);
 
 type ActuatorPost = Omit<Actuator, "id">
 type ActuatorUpdate = Partial<ActuatorPost>

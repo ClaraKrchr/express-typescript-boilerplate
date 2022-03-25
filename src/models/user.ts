@@ -22,7 +22,7 @@ const UserSchema: Schema = new Schema({
   username: { type: String, required: true },
 });
 
-const User: Model<User> = model("User", UserSchema);
+export const User: Model<User> = model("User", UserSchema);
 
 type UserGet = Omit<User, "password">;
 type UserPost = Omit<User, "id">;

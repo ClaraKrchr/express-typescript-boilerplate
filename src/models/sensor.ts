@@ -19,7 +19,7 @@ const SensorSchema: Schema = new Schema ({
     rawValue: { type: Number, required: true },
 });
 
-const Sensor: Model<Sensor> = model("Sensor", SensorSchema);
+export const Sensor: Model<Sensor> = model("Sensor", SensorSchema);
 
 type SensorGet = Sensor & {value: string}
 type SensorPost = Omit<Sensor, "id">
