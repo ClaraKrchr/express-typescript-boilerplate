@@ -5,7 +5,7 @@ export default {
   getAll: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const sensors: typeof Sensor[] = await Sensor.find({});
-      res.send({sensors: sensors});
+      res.send({ sensors: sensors });
     } catch (error) {
       next(error);
     }
@@ -34,14 +34,23 @@ export default {
     }
   },
 
-  //   patch: async (req: Request, res: Response, next: NextFunction) => {
-  //     try {
-  //       res.json("Sensor updated.");
-  //       return;
-  //     } catch (error) {
-  //       next(error);
-  //     }
-  //   },
+  patch: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      let sensor = await Sensor.findByIdAndUpdate({
+        _id: req.params.id,
+        update: req.body,
+      });
+      res.send({
+        message: "Sensor updated.",
+        id: sensor?._id,
+        type: sensor?.type,
+        designation: sensor?.designation,
+        rawValue: sensor?.rawValue,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
 
   delete: async (req: Request, res: Response, next: NextFunction) => {
     try {

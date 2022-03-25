@@ -2,14 +2,14 @@ import { NextFunction, Request, Response } from "express";
 import { User } from "./../models/user";
 
 export default {
-    getAll: async (req: Request, res: Response, next: NextFunction) => {
-      try {
-        const users: typeof User[] = await User.find({});
-        res.send({users: users});
-      } catch (error) {
-        next(error);
-      }
-    },
+  getAll: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const users: typeof User[] = await User.find({});
+      res.send({ users: users });
+    } catch (error) {
+      next(error);
+    }
+  },
 
   getById: async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -29,14 +29,17 @@ export default {
     }
   },
 
-  //   patch: async (req: Request, res: Response, next: NextFunction) => {
-  //     try {
-  //       res.json("User updated.");
-  //       return;
-  //     } catch (error) {
-  //       next(error);
-  //     }
-  //   },
+  patch: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      let user = await User.findByIdAndUpdate({
+        _id: req.params.id,
+        update: req.body,
+      });
+      res.send({ message: "User updated.", id: user?._id, email: user?.email });
+    } catch (error) {
+      next(error);
+    }
+  },
 
   delete: async (req: Request, res: Response, next: NextFunction) => {
     try {

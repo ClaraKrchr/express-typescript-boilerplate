@@ -18,8 +18,8 @@ router.get("/user/:id", User.getById);
 // Post user
 router.post("/user", User.post);
 
-// // Patch user
-// router.patch("/user/:id", User.patch);
+// Patch user
+router.patch("/user/:id", User.patch);
 
 // Delete user
 router.delete("/user/:id", User.delete);
@@ -34,8 +34,8 @@ router.get("/actuator/:id", Actuator.getById);
 // Post actuator
 router.post("/actuator", Actuator.post);
 
-// // Patch actuator
-// router.patch("/actuator/:id", Actuator.patch);
+// Patch actuator
+router.patch("/actuator/:id", Actuator.patch);
 
 // Delete actuator
 router.delete("/actuator/:id", Actuator.delete);
@@ -50,8 +50,8 @@ router.get("/sensor/:id", Sensor.getById);
 // Post sensor
 router.post("/sensor", Sensor.post);
 
-// // Patch sensor
-// router.patch("/sensor/:id", Sensor.patch);
+// Patch sensor
+router.patch("/sensor/:id", Sensor.patch);
 
 // Delete sensor
 router.delete("/sensor/:id", Sensor.delete);
