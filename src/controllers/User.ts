@@ -31,10 +31,11 @@ export default {
 
   patch: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      let user = await User.findByIdAndUpdate({
-        _id: req.params.id,
-        update: req.body,
-      });
+      let user = await User.findByIdAndUpdate(
+        req.params.id,
+        req.body
+      );
+      await user?.save;
       res.send({
         message: "User updated.",
         id: user?._id,

@@ -36,10 +36,10 @@ export default {
 
   patch: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      let sensor = await Sensor.findByIdAndUpdate({
-        _id: req.params.id,
-        update: req.body,
-      });
+      let sensor = await Sensor.findByIdAndUpdate(
+        req.params.id,
+        req.body
+      );
       res.send({
         message: "Sensor updated.",
         id: sensor?._id,

@@ -36,10 +36,10 @@ export default {
 
   patch: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      let actuator = await Actuator.findByIdAndUpdate({
-        _id: req.params.id,
-        update: req.body,
-      });
+      let actuator = await Actuator.findByIdAndUpdate(
+        req.params.id,
+        req.body
+      );
       res.send({
         message: "Actuator updated.",
         id: actuator?._id,
