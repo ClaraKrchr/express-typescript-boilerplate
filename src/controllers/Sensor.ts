@@ -16,8 +16,7 @@ export default {
 
   getById: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      // const sensor = await Sensor.findById({ _id: req.params.id });
-      const sensor = await Sensor.findOne({_id: req.params.id});
+      const sensor = await Sensor.findById({ _id: req.params.id });
       /* res.send({
         id: sensor?._id,
         type: sensor?.type,
@@ -53,7 +52,7 @@ export default {
       //   designation: sensor?.designation,
       //   rawValue: sensor?.rawValue,
       // });
-      res.json(formatResponse("SensorUpdated"))
+      res.json(formatResponse("UPDATED", sensor?.id))
     } catch (error) {
       next(error);
     }
@@ -62,7 +61,8 @@ export default {
   delete: async (req: Request, res: Response, next: NextFunction) => {
     try {
       await Sensor.deleteOne({ _id: req.params.id });
-      res.json({ message: "Sensor deleted." });
+      // res.json({ message: "Sensor deleted." });
+      res.json(formatResponse("DELETED"));
       return;
     } catch (error) {
       next(error);
