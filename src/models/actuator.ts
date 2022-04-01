@@ -17,6 +17,8 @@ const ActuatorSchema: Schema = new Schema({
   state: { type: Boolean, required: true },
 });
 
+ActuatorSchema.set('toJSON', { virtuals: true });
+
 export const Actuator: Model<Actuator> = model("Actuator", ActuatorSchema);
 
 type ActuatorPost = Omit<Actuator, "id">;

@@ -11,6 +11,8 @@ const UserSchema: Schema = new Schema({
   username: { type: String, required: true },
 });
 
+UserSchema.set('toJSON', { virtuals: true });
+
 export const User: Model<User> = model("User", UserSchema);
 
 type UserGet = Omit<User, "password">;

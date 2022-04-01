@@ -19,6 +19,8 @@ const SensorSchema: Schema = new Schema ({
     rawValue: { type: Number, required: true },
 });
 
+SensorSchema.set('toJSON', { virtuals: true });
+
 export const Sensor: Model<Sensor> = model("Sensor", SensorSchema);
 
 type SensorGet = Sensor & {value: string}
