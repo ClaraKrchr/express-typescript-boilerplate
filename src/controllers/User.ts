@@ -1,4 +1,5 @@
 import { formatResponse } from "@/methods/formatResponse";
+import argon2 from "argon2";
 import { NextFunction, Request, Response } from "express";
 import { User } from "./../models/user";
 
@@ -17,7 +18,7 @@ export default {
     try {
       let user = await User.findById({ _id: req.params.id });
       // res.send({ id: user?._id, email: user?.email, username: user?.username });
-      res.json(formatResponse("GET BY ID", user?.id ));
+      res.json(formatResponse("GET BY ID", user?.id));
     } catch (error) {
       next(error);
     }
@@ -26,6 +27,8 @@ export default {
   post: async (req: Request, res: Response, next: NextFunction) => {
     try {
       let user = await User.create(req.body);
+      user.password = await argon2.hash(user.password);
+      user.save();
       // res.send({ message: "User created.", id: user._id });
       res.json(formatResponse("CREATED", user.id));
     } catch (error) {
@@ -33,9 +36,8 @@ export default {
     }
   },
 
-  postLogin: async(req: Request, res: Response, next: NextFunction) => {
+  postLogin: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      
     } catch (error) {
       next(error);
     }
@@ -43,10 +45,7 @@ export default {
 
   patch: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      let user = await User.findByIdAndUpdate(
-        req.params.id,
-        req.body
-      );
+      let user = await User.findByIdAndUpdate(req.params.id, req.body);
       await user?.save;
       // res.send({
       //   message: "User updated.",
