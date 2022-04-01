@@ -11,6 +11,9 @@ router.get("/:id", User.getById);
 // Post user
 router.post("/", User.post);
 
+// Post login
+router.post("/login", User.postLogin);
+
 // Patch user
 router.patch("/:id", User.patch);
 

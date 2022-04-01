@@ -33,6 +33,14 @@ export default {
     }
   },
 
+  postLogin: async(req: Request, res: Response, next: NextFunction) => {
+    try {
+      
+    } catch (error) {
+      next(error);
+    }
+  },
+
   patch: async (req: Request, res: Response, next: NextFunction) => {
     try {
       let user = await User.findByIdAndUpdate(
