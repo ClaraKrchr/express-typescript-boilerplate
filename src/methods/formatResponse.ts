@@ -5,7 +5,7 @@ type ApiResponse = {
     error?: Error
 }
 
-export function formatResponse(
+export function FormatResponse(
     response: string,
     data?: Record<string, any> | null,
     error?: Error) {

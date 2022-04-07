@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { Sensor } from "./../models/sensor";
-import { formatResponse } from "./../methods/formatResponse";
+import { FormatResponse } from "../methods/FormatResponse";
 import { format } from "path";
 
 export default {
@@ -8,7 +8,7 @@ export default {
     try {
       const sensors: typeof Sensor[] = await Sensor.find({});
       //res.send({ sensors: sensors });
-      res.json(formatResponse("GET ALL",sensors));
+      res.json(FormatResponse("GET ALL",sensors));
     } catch (error) {
       next(error);
     }
@@ -23,7 +23,7 @@ export default {
         designation: sensor?.designation,
         rawValue: sensor?.rawValue,
       }); */
-      res.json(formatResponse("GET BY ID", sensor));
+      res.json(FormatResponse("GET BY ID", sensor));
     } catch (error) {
       next(error);
     }
@@ -33,7 +33,7 @@ export default {
     try {
       let sensor = await Sensor.create(req.body);
       // res.send({ message: "Sensor created.", id: sensor._id });
-      res.json(formatResponse("CREATED", sensor.id));
+      res.json(FormatResponse("CREATED", sensor.id));
     } catch (error) {
       next(error);
     }
@@ -52,7 +52,7 @@ export default {
       //   designation: sensor?.designation,
       //   rawValue: sensor?.rawValue,
       // });
-      res.json(formatResponse("UPDATED", sensor?.id))
+      res.json(FormatResponse("UPDATED", sensor?.id))
     } catch (error) {
       next(error);
     }
@@ -62,7 +62,7 @@ export default {
     try {
       await Sensor.deleteOne({ _id: req.params.id });
       // res.json({ message: "Sensor deleted." });
-      res.json(formatResponse("DELETED"));
+      res.json(FormatResponse("DELETED"));
       return;
     } catch (error) {
       next(error);

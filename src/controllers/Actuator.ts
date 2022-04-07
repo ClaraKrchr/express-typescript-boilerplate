@@ -1,4 +1,4 @@
-import { formatResponse } from "@/methods/formatResponse";
+import { FormatResponse } from "@/methods/FormatResponse";
 import { NextFunction, Request, Response } from "express";
 import { Actuator } from "./../models/actuator";
 
@@ -7,7 +7,7 @@ export default {
     try {
       const actuators: typeof Actuator[] = await Actuator.find({});
       // res.send({ actuators: actuators });
-      res.json(formatResponse("GET ALL", actuators));
+      res.json(FormatResponse("GET ALL", actuators));
     } catch (error) {
       next(error);
     }
@@ -22,7 +22,7 @@ export default {
       //   designation: actuator?.designation,
       //   state: actuator?.state,
       // });
-      res.json(formatResponse("GET BY ID", actuator));
+      res.json(FormatResponse("GET BY ID", actuator));
     } catch (error) {
       next(error);
     }
@@ -32,7 +32,7 @@ export default {
     try {
       let actuator = await Actuator.create(req.body);
       // res.send({ message: "Actuator created.", id: actuator._id });
-      res.json(formatResponse("CREATED", actuator.id));
+      res.json(FormatResponse("CREATED", actuator.id));
     } catch (error) {
       next(error);
     }
@@ -51,7 +51,7 @@ export default {
       //   designation: actuator?.designation,
       //   state: actuator?.state,
       // });
-      res.json(formatResponse("UPDATED", actuator?.id));
+      res.json(FormatResponse("UPDATED", actuator?.id));
     } catch (error) {
       next(error);
     }
@@ -61,7 +61,7 @@ export default {
     try {
       await Actuator.deleteOne({ _id: req.params.id });
       // res.json({ message: "Actuator deleted." });
-      res.json(formatResponse("DELETED"));
+      res.json(FormatResponse("DELETED"));
       return;
     } catch (error) {
       next(error);

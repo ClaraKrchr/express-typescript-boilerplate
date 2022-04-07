@@ -1,4 +1,4 @@
-import { formatResponse } from "@/methods/formatResponse";
+import { FormatResponse } from "@/methods/FormatResponse";
 import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
@@ -9,8 +9,7 @@ export default {
   getAll: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const users: typeof User[] = await User.find({});
-      // res.send({ users: users });
-      res.json(formatResponse("GET ALL", users));
+      res.json(FormatResponse("GET ALL", users));
     } catch (error) {
       next(error);
     }
@@ -19,8 +18,7 @@ export default {
   getById: async (req: Request, res: Response, next: NextFunction) => {
     try {
       let user = await User.findById({ _id: req.params.id });
-      // res.send({ id: user?._id, email: user?.email, username: user?.username });
-      res.json(formatResponse("GET BY ID", user?.id));
+      res.json(FormatResponse("GET BY ID", user?.id));
     } catch (error) {
       next(error);
     }
@@ -28,23 +26,22 @@ export default {
 
   post: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      let user = await User.create(req.body);
-      user.password = await argon2.hash(user.password);
-      user.save();
-      // res.send({ message: "User created.", id: user._id });
-      res.json(formatResponse("CREATED", user.id));
+      let user = await User.create({ email: req.body.email, username: req.body.username, password: await argon2.hash(req.body.password) })
+      res.json(FormatResponse("CREATED", user.id));
     } catch (error) {
       next(error);
     }
   },
 
   postLogin: async (req: Request, res: Response, next: NextFunction) => {
-    const user = await User.findOne({email: req.body.email});
+    const user = await User.findOne({ email: req.body.email });
     try {
-      await argon2.verify(user!.password, req.body.password);
+      if (!(await argon2.verify(user!.password, req.body.password))) {
+        throw new Error("Failed");
+      }
       let token = process.env.SECRETKEY;
-      let output = {token:jwt.sign({email: user?.email, username: user?.username, _id: user?.id}, token!)};
-      res.json({message: output});
+      let output = { token: jwt.sign({ email: user?.email, username: user?.username, _id: user?.id }, token!) };
+      res.json({ message: output });
     } catch (error) {
       next(error);
     }
@@ -54,13 +51,7 @@ export default {
     try {
       let user = await User.findByIdAndUpdate(req.params.id, req.body);
       await user?.save;
-      // res.send({
-      //   message: "User updated.",
-      //   id: user?._id,
-      //   email: user?.email,
-      //   username: user?.username,
-      // });
-      res.json(formatResponse("UPDATED", user?.id));
+      res.json(FormatResponse("UPDATED", user?.id));
     } catch (error) {
       next(error);
     }
@@ -70,7 +61,7 @@ export default {
     try {
       await User.deleteOne({ _id: req.params.id });
       // res.json({ message: "User deleted." });
-      res.json(formatResponse("DELETED"));
+      res.json(FormatResponse("DELETED"));
       return;
     } catch (error) {
       next(error);
