@@ -8,7 +8,7 @@ import "dotenv/config";
 export default {
   getAll: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const users: typeof User[] = await User.find({});
+      const users: typeof User[] = await User.find({}, '-password -__v');
       res.json(FormatResponse("GET ALL", users));
     } catch (error) {
       next(error);
