@@ -1,9 +1,20 @@
 import { model, Schema, Model, Document } from "mongoose";
-interface User extends Document {
-  email: string;
-  password: string;
-  username: string;
-}
+import z  from "zod";
+import argon2 from "argon2";
+
+// interface User extends Document {
+//   email: string;
+//   password: string;
+//   username: string;
+// }
+
+export const userSchema = z.object({
+  email: z.string().email(),
+  password: z.string().transform((arg) => argon2.hash(arg)),
+  username: z.string()
+})
+
+type User = z.infer<typeof userSchema>;
 
 const UserSchema: Schema = new Schema({
   email: { type: String, required: true },

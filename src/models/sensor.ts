@@ -23,6 +23,6 @@ SensorSchema.set('toJSON', { virtuals: true });
 
 export const Sensor: Model<Sensor> = model("Sensor", SensorSchema);
 
-type SensorGet = Sensor & {value: string}
+export type SensorGet = Sensor & {value: string}
 type SensorPost = Omit<Sensor, "id">
 type SensorUpdate = Partial<SensorPost>
