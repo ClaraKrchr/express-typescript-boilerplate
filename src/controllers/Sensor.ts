@@ -1,18 +1,44 @@
 import { NextFunction, Request, Response } from "express";
 import { Sensor } from "./../models/sensor";
 import { FormatResponse } from "./../methods/FormatResponse";
-import { format } from "path";
+
+function parseValue(sensorType: string, rawValue: number | boolean): string {
+  let returnValue = "";
+  if (typeof rawValue == "number") {
+    switch (sensorType) {
+      case "TEMPERATURE":
+        returnValue = ((75 * rawValue) / 1023 - 20).toString();
+        break;
+      case "HUMIDITY":
+        returnValue = ((100 * rawValue) / 1023).toString();
+        break;
+      case "BARO":
+        returnValue = ((1150 * rawValue) / 1023).toString();;
+        break;
+      default: break;
+    }
+  } else {
+    if (rawValue) {
+      returnValue = "Actif"
+    } else {
+      returnValue = "Inactif"
+    }
+  }
+
+  return returnValue;
+}
 
 export default {
   getAll: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const sensors: typeof Sensor[] = await Sensor.find({});
-      sensors.forEach(sensor => {
-        if(sensor.type == "TEMPERATURE"){
-          
-        }
+      const sensors = await Sensor.find({});
+      const newSensors = sensors.map((sensor) => {
+        return {
+          ...sensor,
+          value: parseValue(sensor.type, sensor.rawValue),
+        };
       });
-      res.json(FormatResponse("GET ALL",sensors));
+      res.json(FormatResponse("GET ALL", newSensors));
     } catch (error) {
       next(error);
     }
@@ -38,11 +64,8 @@ export default {
 
   patch: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      let sensor = await Sensor.findByIdAndUpdate(
-        req.params.id,
-        req.body
-      );
-      res.json(FormatResponse("UPDATED", sensor?.id))
+      let sensor = await Sensor.findByIdAndUpdate(req.params.id, req.body);
+      res.json(FormatResponse("UPDATED", sensor?.id));
     } catch (error) {
       next(error);
     }
