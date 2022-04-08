@@ -1,8 +1,8 @@
 import { model, Schema, Model, Document } from "mongoose";
 
 enum ActuatorType {
-  BLINDS,
-  LIGHT,
+  BLINDS = "BLINDS",
+  LIGHT = "LIGHT",
 }
 
 interface Actuator extends Document {
@@ -12,7 +12,7 @@ interface Actuator extends Document {
 }
 
 const ActuatorSchema: Schema = new Schema({
-  type: { type: Number, required: true, enum: [0, 1] },
+  type: { type: String, required: true, enum: ["BLINDS", "LIGHT"] },
   designation: { type: String, required: true },
   state: { type: Boolean, required: true },
 });

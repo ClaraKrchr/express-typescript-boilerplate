@@ -1,10 +1,10 @@
 import { model, Schema, Model, Document } from "mongoose";
 
 enum SensorType {
-    TEMPERATURE,
-    HUMIDITY,
-    BARO,
-    PROXIMITY
+    TEMPERATURE = "TEMPERATURE",
+    HUMIDITY = "HUMIDITY",
+    BARO = "BARO",
+    PROXIMITY = "PROXIMITY"
 }
 
 interface Sensor extends Document {
@@ -14,7 +14,7 @@ interface Sensor extends Document {
 }
 
 const SensorSchema: Schema = new Schema ({
-    type: { type: Number, required: true, enum: [0, 1, 2, 3] },
+    type: { type: String, required: true, enum: ["TEMPERATURE", "HUMIDITY", "BARO", "PROXIMITY"] },
     designation : { type: String, required: true },
     rawValue: { type: Number, required: true },
 });

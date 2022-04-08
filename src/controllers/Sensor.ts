@@ -7,6 +7,11 @@ export default {
   getAll: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const sensors: typeof Sensor[] = await Sensor.find({});
+      sensors.forEach(sensor => {
+        if(sensor.type == "TEMPERATURE"){
+          
+        }
+      });
       res.json(FormatResponse("GET ALL",sensors));
     } catch (error) {
       next(error);
@@ -23,16 +28,8 @@ export default {
   },
 
   post: async (req: Request, res: Response, next: NextFunction) => {
-    let type = null;
     try {
-      switch (req.body.type) {
-        case "TEMPERATURE" : type = 0;
-        case "HUMIDITY" : type = 1;
-        case "BARO" : type = 2;
-        case "PROXIMITY" : type = 3;
-        break;
-      }
-      let sensor = await Sensor.create({type: type, designation: req.body.designation, rawValue: req.body.rawValue});
+      let sensor = await Sensor.create(req.body);
       res.json(FormatResponse("CREATED", sensor.id));
     } catch (error) {
       next(error);
