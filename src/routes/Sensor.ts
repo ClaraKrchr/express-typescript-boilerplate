@@ -1,7 +1,9 @@
 import Sensor from "@/controllers/Sensor";
+import { authentication } from "@/middlewares/authentication";
 import express from "express";
 const router = express.Router();
 
+router.use(authentication);
 // Get all sensors
 router.get("/", Sensor.getAll);
 

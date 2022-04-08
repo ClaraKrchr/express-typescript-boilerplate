@@ -11,6 +11,7 @@ import userRouter from "@/routes/User";
 import sensorRouter from "@/routes/Sensor";
 import actuatorRouter from "@/routes/Actuator";
 import cors from "cors";
+import { authentication } from "./middlewares/authentication";
 const app = express();
 
 // view engine setup
@@ -18,6 +19,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(cors());
 app.use(logger("dev"));
 app.use(connectDb);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
