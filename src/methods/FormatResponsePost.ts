@@ -1,17 +1,17 @@
 
 type ApiResponse = {
     response: string
-    data?: Record<string, any> | null
+    id: number
     error?: Error
 }
 
-export function FormatResponse(
+export function FormatResponsePost(
     response: string,
-    data?: Record<string, any> | null,
+    id: number,
     error?: Error) {
     const value: ApiResponse = {
         response: response,
-        data: data,
+        id: id,
         error: error
     };
     return value;
