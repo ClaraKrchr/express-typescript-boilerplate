@@ -7,22 +7,18 @@ function parseValue(sensorType: string, rawValue: number | boolean): string {
   if (typeof rawValue == "number") {
     switch (sensorType) {
       case "TEMPERATURE":
-        returnValue = ((75 * rawValue) / 1023 - 20).toString();
+        returnValue = (((75 * rawValue) / 1023) - 20).toFixed() + "°C";
         break;
       case "HUMIDITY":
-        returnValue = ((100 * rawValue) / 1023).toString();
+        returnValue = ((100 * rawValue) / 1023).toFixed() + "%HR";
         break;
       case "BARO":
-        returnValue = ((1150 * rawValue) / 1023).toString();;
+        returnValue = ((200 * rawValue) / 1023).toFixed() + "hPA";
         break;
       default: break;
     }
   } else {
-    if (rawValue) {
-      returnValue = "Actif"
-    } else {
-      returnValue = "Inactif"
-    }
+    rawValue ? returnValue = "Actif" : returnValue = "Inactif";
   }
 
   return returnValue;
@@ -34,7 +30,10 @@ export default {
       const sensors = await Sensor.find({});
       const newSensors = sensors.map((sensor) => {
         return {
-          ...sensor,
+          id: sensor.id,
+          type: sensor.type,
+          rawValue: sensor.rawValue,
+          designation: sensor.designation,
           value: parseValue(sensor.type, sensor.rawValue),
         };
       });
