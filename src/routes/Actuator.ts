@@ -1,6 +1,8 @@
 import Actuator from "@/controllers/Actuator";
+import { authentication } from "@/middlewares/authentication";
 import express from "express";
 const router = express.Router();
+router.use(authentication);
 
 // Get all actuators
 router.get("/", Actuator.getAll);

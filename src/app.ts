@@ -11,7 +11,6 @@ import userRouter from "@/routes/User";
 import sensorRouter from "@/routes/Sensor";
 import actuatorRouter from "@/routes/Actuator";
 import cors from "cors";
-import { authentication } from "./middlewares/authentication";
 const app = express();
 
 // view engine setup

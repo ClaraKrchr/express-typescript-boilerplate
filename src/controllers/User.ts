@@ -1,9 +1,10 @@
-import { FormatResponse } from "./../methods/FormatResponse";
+import { FormatResponse } from "@/methods/FormatResponse";
 import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
 import { User } from "./../models/user";
 import "dotenv/config";
+import { FormatResponsePost } from "@/methods/FormatResponsePost";
 
 export default {
   getAll: async (req: Request, res: Response, next: NextFunction) => {
@@ -17,7 +18,7 @@ export default {
 
   getById: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      let user = await User.findById({ _id: req.params.id }, '-password -__v');
+      let user = await User.findById({ _id: req.params.id });
       res.json(FormatResponse("GET BY ID", user));
     } catch (error) {
       next(error);
@@ -41,7 +42,8 @@ export default {
       }
       let token = process.env.SECRETKEY;
       let output = { token: jwt.sign({ email: user?.email, username: user?.username, _id: user?.id }, token!) };
-      res.json({ message: output });
+      //res.json({ message: output });
+      res.json(FormatResponse("TOKEN", output));
     } catch (error) {
       next(error);
     }
@@ -49,7 +51,7 @@ export default {
 
   patch: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      let user = await User.findByIdAndUpdate(req.params.id, {email: req.body.email, username: req.body.username, password: await argon2.hash(req.body.password)});
+      let user = await User.findByIdAndUpdate(req.params.id, req.body);
       await user?.save;
       res.json(FormatResponse("UPDATED", user?.id));
     } catch (error) {
@@ -68,7 +70,3 @@ export default {
     }
   },
 };
-function FormatResponsePost(arg0: string, id: any): any {
-  throw new Error("Function not implemented.");
-}
-

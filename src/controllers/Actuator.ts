@@ -22,8 +22,14 @@ export default {
   },
 
   post: async (req: Request, res: Response, next: NextFunction) => {
+    let typeId = null;
     try {
-      let actuator = await Actuator.create(req.body);
+      if(req.body.type === "LIGHT"){
+        typeId = 1;
+      } else if (req.body.type === "BLINDS"){
+        typeId = 0;
+      }
+      let actuator = await Actuator.create({type: typeId, designation: req.body.designation, state: req.body.state});
       res.json(FormatResponse("CREATED", actuator.id));
     } catch (error) {
       next(error);

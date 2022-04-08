@@ -23,8 +23,16 @@ export default {
   },
 
   post: async (req: Request, res: Response, next: NextFunction) => {
+    let type = null;
     try {
-      let sensor = await Sensor.create(req.body);
+      switch (req.body.type) {
+        case "TEMPERATURE" : type = 0;
+        case "HUMIDITY" : type = 1;
+        case "BARO" : type = 2;
+        case "PROXIMITY" : type = 3;
+        break;
+      }
+      let sensor = await Sensor.create({type: type, designation: req.body.designation, rawValue: req.body.rawValue});
       res.json(FormatResponse("CREATED", sensor.id));
     } catch (error) {
       next(error);
