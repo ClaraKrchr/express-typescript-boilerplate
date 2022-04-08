@@ -4,7 +4,7 @@ type ApiResponse = {
     data?: Record<string, any> | null
     error?: Error
 }
-
+//coucou la bite du cul
 export function FormatResponse(
     response: string,
     data?: Record<string, any> | null,
