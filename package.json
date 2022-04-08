@@ -16,6 +16,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.8",
     "morgan": "~1.9.1",
+    "xss": "^1.0.11",
     "zod": "^3.14.4"
   },
   "devDependencies": {

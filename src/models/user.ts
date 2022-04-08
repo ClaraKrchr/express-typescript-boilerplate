@@ -1,6 +1,7 @@
 import { model, Schema, Model, Document } from "mongoose";
 import z  from "zod";
 import argon2 from "argon2";
+import xss from "xss";
 
 // interface User extends Document {
 //   email: string;
@@ -11,7 +12,7 @@ import argon2 from "argon2";
 export const userSchema = z.object({
   email: z.string().email(),
   password: z.string().transform((arg) => argon2.hash(arg)),
-  username: z.string()
+  username: z.string(),//.transform((arg) => xss(arg)),
 })
 
 type User = z.infer<typeof userSchema>;
@@ -29,3 +30,4 @@ export const User: Model<User> = model("User", UserSchema);
 type UserGet = Omit<User, "password">;
 type UserPost = Omit<User, "id">;
 type UserUpdate = Partial<UserPost>;
+
