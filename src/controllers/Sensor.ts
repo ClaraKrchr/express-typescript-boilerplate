@@ -2,12 +2,14 @@ import { NextFunction, Request, Response } from "express";
 import { Sensor } from "./../models/sensor";
 import { FormatResponse } from "./../methods/FormatResponse";
 
+/// Function in order to parse sensors values.
+///<returns>The value parsed.</returns>
 function parseValue(sensorType: string, rawValue: number | boolean): string {
   let returnValue = "";
   if (typeof rawValue == "number") {
     switch (sensorType) {
       case "TEMPERATURE":
-        returnValue = (((75 * rawValue) / 1023) - 20).toFixed() + "°C";
+        returnValue = ((75 * rawValue) / 1023 - 20).toFixed() + "°C";
         break;
       case "HUMIDITY":
         returnValue = ((100 * rawValue) / 1023).toFixed() + "%HR";
@@ -15,16 +17,19 @@ function parseValue(sensorType: string, rawValue: number | boolean): string {
       case "BARO":
         returnValue = ((200 * rawValue) / 1023).toFixed() + "hPA";
         break;
-      default: break;
+      default:
+        break;
     }
   } else {
-    rawValue ? returnValue = "Actif" : returnValue = "Inactif";
+    rawValue ? (returnValue = "Actif") : (returnValue = "Inactif");
   }
 
   return returnValue;
 }
 
 export default {
+  /// Get all sensors.
+  /// <returns>List of sensors.</returns>
   getAll: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const sensors = await Sensor.find({});
@@ -43,6 +48,8 @@ export default {
     }
   },
 
+  /// Get sensor by id.
+  /// <returns>A sensor.</returns>
   getById: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const sensor = await Sensor.findById({ _id: req.params.id });
@@ -52,6 +59,8 @@ export default {
     }
   },
 
+  /// Post sensor.
+  /// <returns>Sensor id.</returns>
   post: async (req: Request, res: Response, next: NextFunction) => {
     try {
       let sensor = await Sensor.create(req.body);
@@ -61,6 +70,8 @@ export default {
     }
   },
 
+  /// Patch a sensor.
+  /// <returns>Sensor id.</returns>
   patch: async (req: Request, res: Response, next: NextFunction) => {
     try {
       let sensor = await Sensor.findByIdAndUpdate(req.params.id, req.body);
@@ -70,6 +81,8 @@ export default {
     }
   },
 
+  /// Delete sensor by id.
+  /// <returns>"DELETED".</returns>
   delete: async (req: Request, res: Response, next: NextFunction) => {
     try {
       await Sensor.deleteOne({ _id: req.params.id });

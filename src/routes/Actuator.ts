@@ -4,19 +4,19 @@ import express from "express";
 const router = express.Router();
 router.use(authentication);
 
-// Get all actuators
+// Get all actuators.
 router.get("/", Actuator.getAll);
 
-// Get actuator
+// Get actuator by id.
 router.get("/:id", Actuator.getById);
 
-// Post actuator
+// Post actuator.
 router.post("/", Actuator.post);
 
-// Patch actuator
+// Patch actuator by id.
 router.patch("/:id", Actuator.patch);
 
-// Delete actuator
+// Delete actuator by id.
 router.delete("/:id", Actuator.delete);
 
 export default router;

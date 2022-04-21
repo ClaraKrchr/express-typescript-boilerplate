@@ -7,6 +7,8 @@ import "dotenv/config";
 import { FormatResponsePost } from "@/methods/FormatResponsePost";
 
 export default {
+  /// Get all users.
+  /// <returns>List of users.</returns>
   getAll: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const users: typeof User[] = await User.find({}, '-password -__v');
@@ -16,6 +18,8 @@ export default {
     }
   },
 
+  /// Get user by id.
+  /// <returns>An user.</returns>
   getById: async (req: Request, res: Response, next: NextFunction) => {
     try {
       let user = await User.findById({ _id: req.params.id });
@@ -25,6 +29,8 @@ export default {
     }
   },
 
+  /// Post user.
+  /// <returns>User id.</returns>
   post: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const data = await userSchema.parseAsync(req.body);
@@ -35,6 +41,8 @@ export default {
     }
   },
 
+  /// Post method to log in user.
+  ///<returns>Token.</returns>
   postLogin: async (req: Request, res: Response, next: NextFunction) => {
     const user = await User.findOne({ email: req.body.email });
     try {
@@ -49,6 +57,8 @@ export default {
     }
   },
 
+  /// Patch an user.
+  /// <returns>User id.</returns>
   patch: async (req: Request, res: Response, next: NextFunction) => {
     try {
       let user = await User.findByIdAndUpdate(req.params.id, req.body);
@@ -59,6 +69,8 @@ export default {
     }
   },
 
+  /// Delete user by id.
+  /// <returns>"DELETED".</returns>
   delete: async (req: Request, res: Response, next: NextFunction) => {
     try {
       await User.deleteOne({ _id: req.params.id });

@@ -3,6 +3,8 @@ import { NextFunction, Request, Response } from "express";
 import { Actuator } from "./../models/actuator";
 
 export default {
+  /// Get all actuators.
+  /// <returns>List of actuators.</returns>
   getAll: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const actuators: typeof Actuator[] = await Actuator.find({});
@@ -12,6 +14,8 @@ export default {
     }
   },
 
+  /// Get actuator by id.
+  /// <returns>An actuator.</returns>
   getById: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const actuator = await Actuator.findById({ _id: req.params.id });
@@ -21,6 +25,8 @@ export default {
     }
   },
 
+  /// Post an actuator.
+  /// <returns>Actuator id.</returns>
   post: async (req: Request, res: Response, next: NextFunction) => {
     try {
       let actuator = await Actuator.create(req.body);
@@ -30,6 +36,8 @@ export default {
     }
   },
 
+  /// Patch an actuator.
+  /// <returns>Actuator id.</returns>
   patch: async (req: Request, res: Response, next: NextFunction) => {
     try {
       let actuator = await Actuator.findByIdAndUpdate(
@@ -42,6 +50,8 @@ export default {
     }
   },
 
+  /// Delete actuator by id.
+  /// <returns>"DELETED".</returns>
   delete: async (req: Request, res: Response, next: NextFunction) => {
     try {
       await Actuator.deleteOne({ _id: req.params.id });

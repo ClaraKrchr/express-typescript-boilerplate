@@ -4,19 +4,19 @@ import express from "express";
 const router = express.Router();
 router.use(authentication);
 
-// Get all sensors
+// Get all sensors.
 router.get("/", Sensor.getAll);
 
-// Get sensor
+// Get sensor by id.
 router.get("/:id", Sensor.getById);
 
-// Post sensor
+// Post sensor.
 router.post("/", Sensor.post);
 
-// Patch sensor
+// Patch sensor by id.
 router.patch("/:id", Sensor.patch);
 
-// Delete sensor
+// Delete sensor by id.
 router.delete("/:id", Sensor.delete);
 
 export default router;

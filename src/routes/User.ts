@@ -3,25 +3,22 @@ import { authentication } from "@/middlewares/authentication";
 import express from "express";
 const router = express.Router();
 
-// Post user
-router.post("/", User.post);
-
-// Post login
-router.post("/login", User.postLogin);
-
-//Auth
-//router.use(authentication);
-
-// Get all users
+// Get all users.
 router.get("/", User.getAll);
 
-// Get user
+// Get user by id.
 router.get("/:id", User.getById);
 
-// Patch user
+// Post user.
+router.post("/", User.post);
+
+// Post login.
+router.post("/login", User.postLogin);
+
+// Patch user by id.
 router.patch("/:id", User.patch);
 
-// Delete user
+// Delete user by id.
 router.delete("/:id", User.delete);
 
 export default router;
