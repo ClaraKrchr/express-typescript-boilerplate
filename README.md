@@ -30,18 +30,18 @@ Download with git :
 Open new terminal install Mongoose : 
   
   ```$ npm install mongoose```
-  
-Start mongodb with new terminal with : 
-  
-  ```$ mongod --config /usr/local/etc/mongod.conf```
-  
+
 Now open terminal from your back directory and use theses commands : 
 
   ```$ npm install
      $ npm install typescrit
      $ npm install node
-  ```
-
+  ``
+  
+Start mongodb with new terminal with : 
+  
+  ```$ mongod --config /usr/local/etc/mongod.conf```
+  
 In new terminal from your back directory and your front directory use :
    
   ```npm start```
