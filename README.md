@@ -36,7 +36,7 @@ Now open terminal from your back directory and use theses commands :
   ```$ npm install
      $ npm install typescrit
      $ npm install node
-  ``
+  ```
   
 Start mongodb with new terminal with : 
   
