@@ -11,3 +11,8 @@ Launch :
 ```ts
 npm start
 ```
+
+Launch mongoose (sur mac) : 
+```ts
+
+```
