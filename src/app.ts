@@ -11,6 +11,8 @@ import userRouter from "@/routes/User";
 import sensorRouter from "@/routes/Sensor";
 import actuatorRouter from "@/routes/Actuator";
 import cors from "cors";
+import { emitter } from "./services/EventEmitter";
+import { TheMailer } from "./services/Mailer";
 const app = express();
 
 // view engine setup
@@ -45,5 +47,10 @@ app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
   res.status(err.status || 500);
   res.json(err);
 });
+
+const mailer = new TheMailer();
+emitter.on('foo.message', () => {
+  mailer.eventToMail();
+})
 
 export default app;

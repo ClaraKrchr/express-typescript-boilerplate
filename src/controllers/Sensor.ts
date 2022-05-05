@@ -1,11 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { Sensor } from "./../models/sensor";
 import { FormatResponse } from "./../methods/FormatResponse";
-import { Event } from "../services/EventEmitter";
-/// Function in order to parse sensors values.
-///<returns>The value parsed.</returns>
-
-const event = new Event;
 
 function parseValue(sensorType: string, rawValue: number | boolean): string {
   let returnValue = "";
@@ -14,19 +9,16 @@ function parseValue(sensorType: string, rawValue: number | boolean): string {
       case "TEMPERATURE":
         returnValue = ((75 * rawValue) / 1023 - 20).toFixed() + "°C";
         if (rawValue > 50){
-          //emitMail("La température dépasse les 50°, elle est actuellement à :" + returnValue);
         }
         break;
       case "HUMIDITY":
         returnValue = ((100 * rawValue) / 1023).toFixed() + "%HR";
         if (rawValue > 110){
-          //emitMail("L'humidité dépasse les 110%, elle est actuellement à :" + returnValue);
         }
         break;
       case "BARO":
         returnValue = ((200 * rawValue) / 1023).toFixed() + "hPA";
         if (rawValue > 1000){
-          //emitMail("La pression dépasse les 1000hpa, elle est actuellement à :" + returnValue);
         }
         break;
       default:
@@ -37,10 +29,6 @@ function parseValue(sensorType: string, rawValue: number | boolean): string {
   }
 
   return returnValue;
-}
-
-function emitMail(message: string) {
-  event.emitNewSensor(message);
 }
 
 export default {
@@ -81,7 +69,6 @@ export default {
     try {
       let sensor = await Sensor.create(req.body);
       res.json(FormatResponse("CREATED", sensor.id));
-      emitMail("Nouveau sensor créé : ");
     } catch (error) {
       next(error);
     }

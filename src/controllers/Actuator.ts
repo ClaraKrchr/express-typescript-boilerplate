@@ -1,6 +1,10 @@
 import { FormatResponse } from "./../methods/FormatResponse";
 import { NextFunction, Request, Response } from "express";
 import { Actuator } from "./../models/actuator";
+import { TheMailer } from "@/services/Mailer";
+import { functionEmitter } from "../services/EventEmitter";
+
+const mailer = new TheMailer();
 
 export default {
   /// Get all actuators.
@@ -56,6 +60,8 @@ export default {
     try {
       await Actuator.deleteOne({ _id: req.params.id });
       res.json(FormatResponse("DELETED"));
+      console.log("avant emit dans controller");
+      functionEmitter("coucou c'est delete ptite pute");
       return;
     } catch (error) {
       next(error);
