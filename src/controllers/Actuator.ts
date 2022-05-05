@@ -60,8 +60,7 @@ export default {
     try {
       await Actuator.deleteOne({ _id: req.params.id });
       res.json(FormatResponse("DELETED"));
-      console.log("avant emit dans controller");
-      functionEmitter("coucou c'est delete ptite pute");
+      functionEmitter("Message important");
       return;
     } catch (error) {
       next(error);

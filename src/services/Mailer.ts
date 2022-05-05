@@ -1,23 +1,23 @@
 import nodemailer from 'nodemailer';
 
 export class TheMailer {
-  
-  async eventToMail() {
-    console.log("allo jecoute");
-    mailer("coucou");
-    console.log("allo jai envoye");
-  }
-}
+  private transporter: any;
 
-async function mailer(message: string) {
-  console.log("debut try");
-  try {
+  constructor() {
+    this.createUserAccount();
+  }
+
+  async eventToMail() {
+    this.mailer("coucou");
+  }
+
+  private async createUserAccount() {
     // Generate test SMTP service account from ethereal.email
     // Only needed if you don't have a real mail account for testing
     let testAccount = await nodemailer.createTestAccount();
 
     // create reusable transporter object using the default SMTP transport
-    let transporter = nodemailer.createTransport({
+    this.transporter = nodemailer.createTransport({
       host: "smtp.ethereal.email",
       port: 587,
       secure: false, // true for 465, false for other ports
@@ -26,24 +26,27 @@ async function mailer(message: string) {
         pass: testAccount.pass, // generated ethereal password
       },
     });
-
-    // send mail with defined transport object
-    let info = await transporter.sendMail({
-      from: '"Fred Foo 👻" <levalentindu31@hotmail.fr>', // sender address
-      to: "vylhkin@live.fr", // list of receivers
-      subject: "coucou", // Subject line
-      text: "Je m'appelle clara et je suis une pute", // plain text body
-      html: "<b>Je m'appelle clara et je suis une pute</b>", // html body
-    });
-    console.log("Message sent: %s", info.messageId);
-    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
-
-    // Preview only available when sending through an Ethereal account
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-    // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
   }
-  catch (exception) {
-    console.log(exception);
+
+  async mailer(message: string) {
+    try {
+      // send mail with defined transport object
+      let info = await this.transporter.sendMail({
+        from: '"Fred Foo 👻" <levalentindu31@hotmail.fr>', // sender address
+        to: "vylhkin@live.fr", // list of receivers
+        subject: "Message important", // Subject line
+        text: "Un actuateur a été supprimé.", // plain text body
+        html: "<b>Un actuateur a été supprimé.</b>", // html body
+      });
+
+      // Id du message envoyé.
+      console.log("Message sent: %s", info.messageId);
+
+      // Lien pour préview l'email envoyé.
+      console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    }
+    catch (exception) {
+      console.log(exception);
+    }
   }
 }
