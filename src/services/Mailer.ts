@@ -37,7 +37,7 @@ export class TheMailer implements ITheMailer {
         to: "vylhkin@live.fr", // list of receivers
         subject: "Message important", // Subject line
         text: message, // plain text body
-        html: "<b>Un actuateur a été supprimé.</b>", // html body
+        html: message, // html body
       });
 
       // Id du message envoyé.

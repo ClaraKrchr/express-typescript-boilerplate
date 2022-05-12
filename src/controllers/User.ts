@@ -3,12 +3,12 @@ import { NextFunction, Request, Response } from "express";
 import { User, userSchema } from "./../models/user";
 import "dotenv/config";
 import { FormatResponsePost } from "@/methods/FormatResponsePost";
-import  JwtService  from "../services/JwtServices";
-
-import argon2 from "argon2";
-import jwt from "jsonwebtoken";
+import JwtService from "../services/JwtServices";
+import ArgonService from "../services/ArgonService";
+import { functionEmitter } from "../services/EventEmitter";
 
 const jwtService = new JwtService();
+const argonService = new ArgonService();
 
 export default {
   /// Get all users.
@@ -44,6 +44,7 @@ export default {
         password: data.password,
       });
       res.json(FormatResponsePost("CREATED", user.id));
+      functionEmitter("Un utilisateur a été créé.");
     } catch (error) {
       next(error);
     }
@@ -54,10 +55,11 @@ export default {
   postLogin: async (req: Request, res: Response, next: NextFunction) => {
     const user = await User.findOne({ email: req.body.email });
     try {
-      if (!(await argon2.verify(user!.password, req.body.password))) {
+      // if (!(await argon2.verify(user!.password, req.body.password))) {
+      if (!argonService.verifyToken(user!.password, req.body.password)) {
         throw new Error("Failed");
       }
-      let output = {token: jwtService.login(user)}
+      let output = { token: jwtService.login(user) };
       console.log(output);
       res.json(FormatResponse("TOKEN", output));
     } catch (error) {
@@ -83,6 +85,7 @@ export default {
     try {
       await User.deleteOne({ _id: req.params.id });
       res.json(FormatResponse("DELETED"));
+      functionEmitter("Un utilisateur a été supprimé.");
       return;
     } catch (error) {
       next(error);
