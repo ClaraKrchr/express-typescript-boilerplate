@@ -1,10 +1,7 @@
 import { FormatResponse } from "./../methods/FormatResponse";
 import { NextFunction, Request, Response } from "express";
 import { Actuator } from "./../models/actuator";
-import { TheMailer } from "@/services/Mailer";
 import { functionEmitter } from "../services/EventEmitter";
-
-
 
 export default {
   /// Get all actuators.
@@ -60,7 +57,7 @@ export default {
     try {
       await Actuator.deleteOne({ _id: req.params.id });
       res.json(FormatResponse("DELETED"));
-      functionEmitter();
+      functionEmitter("Actuator supprimé.");
       return;
     } catch (error) {
       next(error);

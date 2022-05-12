@@ -8,8 +8,8 @@ export class TheMailer implements ITheMailer {
     this.createUserAccount();
   }
 
-  async eventToMail() {
-    this.mailer();
+  async eventToMail(message: string) {
+    this.mailer(message);
   }
 
   private async createUserAccount() {
@@ -29,14 +29,14 @@ export class TheMailer implements ITheMailer {
     });
   }
 
-  async mailer() {
+  async mailer(message: string) {
     try {
       // send mail with defined transport object
       let info = await this.transporter.sendMail({
         from: '"Fred Foo 👻" <levalentindu31@hotmail.fr>', // sender address
         to: "vylhkin@live.fr", // list of receivers
         subject: "Message important", // Subject line
-        text: "Un actuateur a été supprimé.", // plain text body
+        text: message, // plain text body
         html: "<b>Un actuateur a été supprimé.</b>", // html body
       });
 

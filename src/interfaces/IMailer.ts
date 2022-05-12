@@ -1,3 +1,3 @@
 export interface ITheMailer {
-    mailer: () => void,
+    mailer: (message: string) => void,
 }

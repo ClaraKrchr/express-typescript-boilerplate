@@ -50,7 +50,7 @@ app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
 
 const mailer = new TheMailer();
 emitter.on('foo.message', () => {
-  mailer.eventToMail();
+  mailer.eventToMail(emitter.message);
 })
 
 export default app;
