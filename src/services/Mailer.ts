@@ -1,6 +1,7 @@
+import { ITheMailer } from './IMailer';
 import nodemailer from 'nodemailer';
 
-export class TheMailer {
+export class TheMailer implements ITheMailer {
   private transporter: any;
 
   constructor() {
@@ -8,7 +9,7 @@ export class TheMailer {
   }
 
   async eventToMail() {
-    this.mailer("coucou");
+    this.mailer();
   }
 
   private async createUserAccount() {
@@ -28,7 +29,7 @@ export class TheMailer {
     });
   }
 
-  async mailer(message: string) {
+  async mailer() {
     try {
       // send mail with defined transport object
       let info = await this.transporter.sendMail({

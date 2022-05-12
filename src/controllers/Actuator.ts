@@ -4,7 +4,7 @@ import { Actuator } from "./../models/actuator";
 import { TheMailer } from "@/services/Mailer";
 import { functionEmitter } from "../services/EventEmitter";
 
-const mailer = new TheMailer();
+
 
 export default {
   /// Get all actuators.
@@ -60,7 +60,7 @@ export default {
     try {
       await Actuator.deleteOne({ _id: req.params.id });
       res.json(FormatResponse("DELETED"));
-      functionEmitter("Message important");
+      functionEmitter();
       return;
     } catch (error) {
       next(error);

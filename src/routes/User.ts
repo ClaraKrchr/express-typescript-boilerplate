@@ -1,5 +1,4 @@
 import User from "@/controllers/User";
-import { authentication } from "@/middlewares/authentication";
 import express from "express";
 const router = express.Router();
 
