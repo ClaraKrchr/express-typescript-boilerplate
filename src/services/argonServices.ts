@@ -1,24 +1,30 @@
-import { Request, Response, NextFunction} from "express";
-import jwt from "jsonwebtoken"
+import { EventEmitter } from "stream";
+import argon2 from "argon2";
+import jwt from "jsonwebtoken";
 
-export function signin_oauth(email : string, _id : string)
-{
-    return jwt.sign(
-      { user_id: _id, email },
-      process.env.SECRET_KEY!,
-      {
-        expiresIn: "2h",
-      }
-    );
-}
+class ArgonService extends EventEmitter implements IArgonService {
+  hasher = argon2;
 
-export const oauth_verif = (req: Request, res: Response, next: NextFunction) =>
-{
-    try {
-        const token = req.headers[("authorization")]!.split(" ");
-        jwt.verify(token[1], process.env.SECRET_KEY!);
-    } catch (error) {
-        next(error);
+  constructor() {
+    super();
+  }
+
+  public async login(password: string, user: any) {
+    let token = "";
+    if (await argon2.verify(user.password, password)) {
+      const signature = process.env.SECRET_KEY;
+      token = jwt.sign({ id: user._id }, signature!);
     }
-    next();
+
+    return token;
+  }
+
+  public authenticate(token: string) {
+    jwt.verify(token, process.env.SECRET_KEY!, () => {
+      return false;
+    });
+    return true;
+  }
 }
+
+export default Authenticator;
