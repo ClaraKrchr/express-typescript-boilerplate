@@ -4,10 +4,11 @@ import { User, userSchema } from "./../models/user";
 import "dotenv/config";
 import { FormatResponsePost } from "@/methods/FormatResponsePost";
 import  JwtService  from "../services/JwtServices";
-import ArgonService from "../services/ArgonService";
+
+import argon2 from "argon2";
+import jwt from "jsonwebtoken";
 
 const jwtService = new JwtService();
-const argonService = new ArgonService();
 
 export default {
   /// Get all users.
@@ -53,10 +54,11 @@ export default {
   postLogin: async (req: Request, res: Response, next: NextFunction) => {
     const user = await User.findOne({ email: req.body.email });
     try {
-      if (!(argonService.verifyToken(user!.password, req.body.password))) {
+      if (!(await argon2.verify(user!.password, req.body.password))) {
         throw new Error("Failed");
       }
-      let output = { token: jwtService.login(req.body.password, user) };
+      let output = {token: jwtService.login(user)}
+      console.log(output);
       res.json(FormatResponse("TOKEN", output));
     } catch (error) {
       next(error);

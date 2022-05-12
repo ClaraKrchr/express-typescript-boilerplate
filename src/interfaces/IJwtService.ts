@@ -1,4 +1,4 @@
 export default interface IJwtService {
-    login: (password: string, user: any) => Promise<string>;
+    login: (user: any)=> string;
     authenticate: (token: string) => boolean;
 }

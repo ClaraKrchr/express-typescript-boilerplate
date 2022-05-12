@@ -49,8 +49,10 @@ app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
 });
 
 const mailer = new TheMailer();
-emitter.on('foo.message', () => {
-  mailer.eventToMail(emitter.message);
+emitter.on('foo.message', (msg) => {
+  mailer.eventToMail(msg);
 })
+
+ 
 
 export default app;
