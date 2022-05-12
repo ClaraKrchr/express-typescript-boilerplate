@@ -1,4 +1,4 @@
-import { ITheMailer } from './IMailer';
+import { ITheMailer } from '../interfaces/IMailer';
 import nodemailer from 'nodemailer';
 
 export class TheMailer implements ITheMailer {

@@ -1,17 +1,20 @@
 import { FormatResponse } from "@/methods/FormatResponse";
-import argon2 from "argon2";
-import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
 import { User, userSchema } from "./../models/user";
 import "dotenv/config";
 import { FormatResponsePost } from "@/methods/FormatResponsePost";
+import  JwtService  from "../services/JwtServices";
+import ArgonService from "../services/ArgonService";
+
+const jwtService = new JwtService();
+const argonService = new ArgonService();
 
 export default {
   /// Get all users.
   /// <returns>List of users.</returns>
   getAll: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const users: typeof User[] = await User.find({}, '-password -__v');
+      const users: typeof User[] = await User.find({}, "-password -__v");
       res.json(FormatResponse("GET ALL", users));
     } catch (error) {
       next(error);
@@ -34,7 +37,11 @@ export default {
   post: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const data = await userSchema.parseAsync(req.body);
-      let user = await User.create({ email: data.email, username: data.username, password: data.password })
+      let user = await User.create({
+        email: data.email,
+        username: data.username,
+        password: data.password,
+      });
       res.json(FormatResponsePost("CREATED", user.id));
     } catch (error) {
       next(error);
@@ -46,11 +53,10 @@ export default {
   postLogin: async (req: Request, res: Response, next: NextFunction) => {
     const user = await User.findOne({ email: req.body.email });
     try {
-      if (!(await argon2.verify(user!.password, req.body.password))) {
+      if (!(argonService.verifyToken(user!.password, req.body.password))) {
         throw new Error("Failed");
       }
-      let token = process.env.SECRETKEY;
-      let output = { token: jwt.sign({ email: user?.email, username: user?.username, _id: user?.id }, token!) };
+      let output = { token: jwtService.login(req.body.password, user) };
       res.json(FormatResponse("TOKEN", output));
     } catch (error) {
       next(error);

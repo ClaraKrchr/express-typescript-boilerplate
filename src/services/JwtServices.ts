@@ -1,8 +1,9 @@
+import  IJwtService  from '../interfaces/IJwtService';
 import { EventEmitter } from "stream";
 import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 
-class ArgonService extends EventEmitter implements IArgonService {
+class JwtService extends EventEmitter implements IJwtService {
   hasher = argon2;
 
   constructor() {
@@ -27,4 +28,4 @@ class ArgonService extends EventEmitter implements IArgonService {
   }
 }
 
-export default Authenticator;
+export default JwtService;
