@@ -55,9 +55,11 @@ export default {
   /// <returns>"DELETED".</returns>
   delete: async (req: Request, res: Response, next: NextFunction) => {
     try {
+      const actuatorName = await Actuator.findById({ _id: req.params.id }, "-type -__v -_id -state");
+      //const actuatorName = actuator?.designation;
       await Actuator.deleteOne({ _id: req.params.id });
       res.json(FormatResponse("DELETED"));
-      functionEmitter("Actuator supprimé.");
+      functionEmitter("L'actuateur " + actuatorName?.designation + " a été supprimé.");
       return;
     } catch (error) {
       next(error);

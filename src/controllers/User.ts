@@ -44,7 +44,7 @@ export default {
         password: data.password,
       });
       res.json(FormatResponsePost("CREATED", user.id));
-      functionEmitter("Un utilisateur a été créé.");
+      functionEmitter("L'utilisateur " + user.username + " a été créé.");
     } catch (error) {
       next(error);
     }
